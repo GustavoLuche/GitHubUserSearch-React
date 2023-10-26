@@ -1,3 +1,11 @@
+/* Estilo para o corpo da página */
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+  background-color: #0D1117;
+}
+
 /* Estilo para o cabeçalho */
 .App-header {
   background-color: #24292F;
@@ -7,4 +15,26 @@
 
 .App-header h1 {
   font-size: 24px;
+}
+
+/* Estilo para o contêiner principal */
+.App-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Estilo para o formulário de pesquisa */
+.App-search {
+  display: flex;
+  justify-content: center; 
+}
+
+.form-group {
+  display: flex;
+}
+
+/* Estilo para o button do formulário de pesquisa */
+.search-button {
+  height: auto; 
+  margin-left: 10px;
 }
