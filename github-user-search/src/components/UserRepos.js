@@ -6,7 +6,7 @@ const UserRepos = ({ userRepos }) => {
 
   return (
     <div>
-      <h2>User Repositories (Sorted by Last Update)</h2>
+      <h2>User Repositories</h2>
       <ListGroup>
         {userRepos.map((repo) => (
           <ListGroup.Item key={repo.id}>

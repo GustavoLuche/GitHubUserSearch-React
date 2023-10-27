@@ -1,5 +1,3 @@
-// services/githubService.js
-
 import axios from "axios";
 
 const BASE_URL = "https://api.github.com";
@@ -8,9 +6,13 @@ const BASE_URL = "https://api.github.com";
 export const getUserDetails = async (username) => {
   try {
     const response = await axios.get(`${BASE_URL}/users/${username}`);
-    return response.data;
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Failed to retrieve user details.");
+    }
   } catch (error) {
-    throw error;
+    throw new Error("User not found or there was an issue with the request.");
   }
 };
 
@@ -18,8 +20,12 @@ export const getUserDetails = async (username) => {
 export const getUserRepositories = async (username) => {
   try {
     const response = await axios.get(`${BASE_URL}/users/${username}/repos`);
-    return response.data;
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Failed to retrieve user repositories.");
+    }
   } catch (error) {
-    throw error;
+    throw new Error("User not found or there was an issue with the request.");
   }
 };
