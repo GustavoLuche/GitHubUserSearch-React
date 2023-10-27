@@ -16,16 +16,28 @@ export const getUserDetails = async (username) => {
   }
 };
 
-// Função para buscar os repositórios de um usuário no GitHub
-export const getUserRepositories = async (username) => {
+// Função para buscar todos os repositórios de um usuário no GitHub
+export const getAllUserRepositories = async (username) => {
   try {
-    const response = await axios.get(`${BASE_URL}/users/${username}/repos`);
-    if (response.status === 200) {
-      return response.data;
-    } else {
-      throw new Error("Failed to retrieve user repositories.");
+    let page = 1;
+    let allRepositories = [];
+
+    while (true) {
+      const response = await axios.get(`${BASE_URL}/users/${username}/repos`, {
+        params: { page },
+      });
+
+      if (response.status === 200 && response.data.length > 0) {
+        allRepositories = allRepositories.concat(response.data);
+        page++;
+      } else {
+        // Nenhos mais repositórios disponíveis
+        break;
+      }
     }
+
+    return allRepositories;
   } catch (error) {
-    throw new Error("User not found or there was an issue with the request.");
+    throw new Error("Failed to retrieve user repositories.");
   }
 };
