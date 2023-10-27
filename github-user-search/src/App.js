@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import Container from "react-bootstrap/Container";
 import Search from "./components/Search";
 import UserInfo from "./components/UserInfo";
+import UserRepos from "./components/UserRepos";
 import { getUserDetails, getUserRepositories } from "./services/githubService";
 import "./App.css";
 
@@ -23,16 +24,7 @@ function App() {
       <Container className="App-container">
         <Search onSearch={handleSearch} />
         {userData && <UserInfo userData={userData} />}
-        {userRepos.length > 0 && (
-          <div>
-            <h2>User Repositories</h2>
-            <ul>
-              {userRepos.map((repo) => (
-                <li key={repo.id}>{repo.name}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+        {userRepos.length > 0 && <UserRepos userRepos={userRepos} />}
       </Container>
     </div>
   );
