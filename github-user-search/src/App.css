@@ -8,33 +8,13 @@
 
 /* Estilo para o cabeçalho */
 .App-header {
-  background-color: #24292F;
+  background-color: #010409;
   color: #fff;
-  padding: 20px 0;
-}
-
-.App-header h1 {
-  font-size: 24px;
-}
-
-/* Estilo para o contêiner principal */
-.App-container {
-  margin-top: 20px;
-  margin-bottom: 20px;
 }
 
 /* Estilo para o formulário de pesquisa */
-.App-search {
-  display: flex;
-  justify-content: center; 
-}
-
-.form-group {
-  display: flex;
-}
-
-/* Estilo para o button do formulário de pesquisa */
-.search-button {
-  height: auto; 
-  margin-left: 10px;
+.App-search span {
+  border-radius: 0;
+  background-color: #0D1117;
+  color: #A6A8AB;
 }
