@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "./components/Header";
 import Container from "react-bootstrap/Container";
 import Search from "./components/Search";
+import UserInfo from "./components/UserInfo";
 import { getUserDetails, getUserRepositories } from "./services/githubService";
 import "./App.css";
 
@@ -21,13 +22,7 @@ function App() {
       <Header title="GitHub User Search" />
       <Container className="App-container">
         <Search onSearch={handleSearch} />
-        {userData && (
-          <div>
-            <h2>User Details</h2>
-            <p>Name: {userData.name}</p>
-            <p>Number of Repositories: {userData.public_repos}</p>
-          </div>
-        )}
+        {userData && <UserInfo userData={userData} />}
         {userRepos.length > 0 && (
           <div>
             <h2>User Repositories</h2>
