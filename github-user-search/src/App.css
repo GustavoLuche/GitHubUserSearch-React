@@ -18,3 +18,10 @@
   background-color: #0D1117;
   color: #A6A8AB;
 }
+
+/* Estilo para o rodapé */
+.App-footer {
+  margin-top: auto;
+  background-color: #010409;
+  color: #fff;
+}

@@ -7,10 +7,13 @@ import ErrorMessage from "./components/ErrorMessage";
 import UserInfo from "./components/UserInfo";
 import Paginator from "./components/Paginator";
 import UserRepos from "./components/UserRepos";
+import Footer from "./components/Footer";
+
 import {
   getUserDetails,
   getAllUserRepositories,
 } from "./services/githubService";
+
 import "./App.css";
 
 function App() {
@@ -58,18 +61,12 @@ function App() {
   return (
     <div className="App">
       <Header title="GitHub User Search" />
+      <Search onSearch={handleSearch} />
       <Container className="App-container">
-        <Search onSearch={handleSearch} />
         {isLoading && <SpinnerLoading />}
         {!isLoading && !error && (
           <>
             {userData && <UserInfo userData={userData} />}
-            <Paginator
-              totalResults={userRepos.length}
-              currentPage={currentPage}
-              itemsPerPage={itemsPerPage}
-              onPageChange={handlePageChange}
-            />
             {userRepos.length > 0 && (
               <UserRepos userRepos={userReposToDisplay} />
             )}
@@ -77,6 +74,13 @@ function App() {
         )}
         {error && !isLoading && <ErrorMessage message={error} />}
       </Container>
+      <Paginator
+              totalResults={userRepos.length}
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
+              onPageChange={handlePageChange}
+            />
+      <Footer />
     </div>
   );
 }
