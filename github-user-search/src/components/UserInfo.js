@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 
 const UserInfo = ({ userData }) => {
   return (
-    <div className="App-user-info mb-3">
+    <div className="App-user-info mb-3 pt-4 d-flex justify-content-center">
       <Card
         text="white"
         style={{

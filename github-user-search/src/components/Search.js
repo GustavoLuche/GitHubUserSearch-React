@@ -26,7 +26,14 @@ function Search({ onSearch }) {
     <div className="App-search mb-4 d-flex justify-content-center">
       <Form onSubmit={handleSubmit}>
         <InputGroup>
-          <InputGroup.Text>@</InputGroup.Text>
+          <InputGroup.Text
+            style={{
+              borderTopLeftRadius: "6px",
+              borderBottomLeftRadius: "6px"
+            }}
+          >
+            @
+          </InputGroup.Text>
           <Form.Control
             type="text"
             placeholder="Username"

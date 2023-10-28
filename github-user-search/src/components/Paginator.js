@@ -5,7 +5,7 @@ function Paginator({ totalResults, currentPage, itemsPerPage, onPageChange }) {
   const totalPages = Math.ceil(totalResults / itemsPerPage);
 
   // Define o número máximo de itens de paginação a serem exibidos
-  const maxItens = 5;
+  const maxItens = 10;
   let startItem, endItem;
 
   // Calcula o intervalo de itens de paginação a serem exibidos
@@ -39,20 +39,20 @@ function Paginator({ totalResults, currentPage, itemsPerPage, onPageChange }) {
   return (
     <div className="App-paginator d-flex justify-content-center mb-3">
       <Pagination className="m-0">
-        {startItem > 1 && <Pagination.First onClick={() => onPageChange(1)} />}
-        {startItem > 2 && <Pagination.Ellipsis disabled />}
+        {startItem > 1 && <Pagination.First className="custom-page" onClick={() => onPageChange(1)} />}
+        {startItem > 2 && <Pagination.Ellipsis className="custom-page" disabled />}
         {pages.map((page) => (
-          <Pagination.Item
+          <Pagination.Item className="custom-page"
             key={page}
             active={currentPage === page}
-            onClick={() => onPageChange(page)}
+            onClick={() => onPageChange(page)} 
           >
             {page}
           </Pagination.Item>
         ))}
-        {endItem < totalPages - 1 && <Pagination.Ellipsis disabled />}
+        {endItem < totalPages - 1 && <Pagination.Ellipsis className="custom-page" disabled />}
         {endItem < totalPages && (
-          <Pagination.Last onClick={() => onPageChange(totalPages)} />
+          <Pagination.Last className="custom-page" onClick={() => onPageChange(totalPages)} />
         )}
       </Pagination>
     </div>

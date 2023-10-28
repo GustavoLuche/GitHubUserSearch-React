@@ -19,9 +19,60 @@
   color: #A6A8AB;
 }
 
+/* Estilo para a paginação */
+.pagination .page-item .page-link{
+  background-color: #0D1117;
+  border-color: #010409;
+  color: white;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #010409;
+  border-color: #010409;
+  color: white;
+}
+
+.pagination .page-item .page-link:active {
+  background-color: #010409;
+  border-color: #010409;
+  color: white;
+}
+
+.pagination .page-item .page-link:hover {
+  background-color: #f8f9fa; 
+  border-color: #ccc; 
+  color: #000; 
+}
+
+
 /* Estilo para o rodapé */
 .App-footer {
   margin-top: auto;
   background-color: #010409;
   color: #fff;
+}
+
+/* Layout de 2 colunas para telas grandes */
+@media (min-width: 768px) {
+  .App-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 20px; 
+  }
+}
+
+/* Layout de 2 colunas para telas grandes (antes da pesquisa) */
+.no-search-performed {
+  margin-top: 100px; 
+}
+
+/* Estilo para telas menores ou dispositivos móveis */
+@media (max-width: 768px) {
+  .App-container {
+    grid-template-columns: 1fr; 
+  }
+
+  .App-user-info {
+    text-align: center;
+  }
 }

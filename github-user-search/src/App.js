@@ -23,6 +23,7 @@ function App() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchPerformed, setSearchPerformed] = useState(false);
   const itemsPerPage = 10;
 
   // Função para lidar com a pesquisa de usuário
@@ -34,10 +35,12 @@ function App() {
       setUserData(userDetails);
       setUserRepos(userRepos);
       setError(null);
+      setSearchPerformed(true);
     } catch (error) {
       setUserData(null);
       setUserRepos([]);
       setError("User not found.");
+      setSearchPerformed(false);
     } finally {
       setIsLoading(false);
       setCurrentPage(1);
@@ -61,25 +64,37 @@ function App() {
   return (
     <div className="App">
       <Header title="GitHub User Search" />
-      <Search onSearch={handleSearch} />
+      <div className={`${searchPerformed ? "" : "no-search-performed"}`}>
+        <Search onSearch={handleSearch} />
+      </div>
+      {isLoading && <SpinnerLoading />}
       <Container className="App-container">
-        {isLoading && <SpinnerLoading />}
         {!isLoading && !error && (
           <>
             {userData && <UserInfo userData={userData} />}
-            {userRepos.length > 0 && (
-              <UserRepos userRepos={userReposToDisplay} />
-            )}
+            <div>
+              <Paginator
+                totalResults={userRepos.length}
+                currentPage={currentPage}
+                itemsPerPage={itemsPerPage}
+                onPageChange={handlePageChange}
+              />
+              {userRepos.length > 0 && (
+                <UserRepos userRepos={userReposToDisplay} />
+              )}
+            </div>
           </>
         )}
-        {error && !isLoading && <ErrorMessage message={error} />}
       </Container>
-      <Paginator
-              totalResults={userRepos.length}
-              currentPage={currentPage}
-              itemsPerPage={itemsPerPage}
-              onPageChange={handlePageChange}
-            />
+      {error && !isLoading && <ErrorMessage message={error} />}
+      {!isLoading && !error && (
+        <Paginator
+          totalResults={userRepos.length}
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          onPageChange={handlePageChange}
+        />
+      )}
       <Footer />
     </div>
   );
