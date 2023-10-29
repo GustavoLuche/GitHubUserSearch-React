@@ -7,6 +7,8 @@ const UserRepos = () => {
   const { state } = useGithubContext();
   const { userRepos, currentPage, itemsPerPage } = state;
 
+  userRepos.sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at));
+
   // Calcular o índice do primeiro item na página atual
   const startIndex = (currentPage - 1) * itemsPerPage;
 
@@ -14,10 +16,6 @@ const UserRepos = () => {
   const userReposToDisplay = userRepos.slice(
     startIndex,
     startIndex + itemsPerPage
-  );
-
-  userReposToDisplay.sort(
-    (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
   );
 
   return (
@@ -54,7 +52,7 @@ const UserRepos = () => {
                 )}
                 <Card.Text className="mb-1">
                   <strong>Last Updated:</strong>{" "}
-                  {new Date(repo.updated_at).toLocaleDateString()}
+                  {new Date(repo.pushed_at).toLocaleDateString()}
                 </Card.Text>
               </Card.Body>
             </Card>
