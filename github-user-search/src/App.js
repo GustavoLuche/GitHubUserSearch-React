@@ -45,7 +45,7 @@ function App() {
       <Container className="App-container">
         {!isLoading && !error && (
           <>
-            {userData && <UserInfo userData={userData} />}
+            <UserInfo />
             <div>
               <Paginator
                 totalResults={userRepos.length}

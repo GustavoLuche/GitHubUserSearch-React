@@ -1,7 +1,12 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
+import { useGithubContext } from "../context/GithubContext";
 
-const UserInfo = ({ userData }) => {
+const UserInfo = () => {
+  // Usando o contexto para acessar o estado
+  const { state } = useGithubContext();
+  const { userData } = state;
+
   return (
     <div className="App-user-info mb-3 pt-4 d-flex justify-content-center">
       <Card
@@ -32,9 +37,13 @@ const UserInfo = ({ userData }) => {
               </a>
             </Card.Subtitle>
           )}
-          {userData.bio && <Card.Text className="mb-2">{userData.bio}</Card.Text>}
+          {userData.bio && (
+            <Card.Text className="mb-2">{userData.bio}</Card.Text>
+          )}
           {userData.location && (
-            <Card.Text className="mb-1">Location: {userData.location}</Card.Text>
+            <Card.Text className="mb-1">
+              Location: {userData.location}
+            </Card.Text>
           )}
           {userData.email && (
             <Card.Text className="mb-1">
@@ -55,8 +64,12 @@ const UserInfo = ({ userData }) => {
           <Card.Text className="mb-1">
             Public Repositories: {userData.public_repos}
           </Card.Text>
-          <Card.Text className="mb-1">Followers: {userData.followers}</Card.Text>
-          <Card.Text className="mb-1">Following: {userData.following}</Card.Text>
+          <Card.Text className="mb-1">
+            Followers: {userData.followers}
+          </Card.Text>
+          <Card.Text className="mb-1">
+            Following: {userData.following}
+          </Card.Text>
         </Card.Body>
       </Card>
     </div>
