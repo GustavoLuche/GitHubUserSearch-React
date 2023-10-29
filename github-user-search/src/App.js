@@ -16,23 +16,7 @@ import "./App.css";
 function App() {
   // Usando o contexto para acessar o estado e funções
   const { state } = useGithubContext();
-  const {
-    userRepos,
-    error,
-    isLoading,
-    currentPage,
-    searchPerformed,
-    itemsPerPage,
-  } = state;
-
-  // Calcular o índice do primeiro item na página atual
-  const startIndex = (currentPage - 1) * itemsPerPage;
-
-  // Filtrar a lista de conselhos para exibir apenas os itens da página atual
-  const userReposToDisplay = userRepos.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
+  const { error, isLoading, searchPerformed } = state;
 
   return (
     <div className="App">
@@ -47,9 +31,7 @@ function App() {
             <UserInfo />
             <div>
               <Paginator />
-              {userRepos.length > 0 && (
-                <UserRepos userRepos={userReposToDisplay} />
-              )}
+              <UserRepos />
             </div>
           </>
         )}
