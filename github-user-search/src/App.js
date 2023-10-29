@@ -17,7 +17,6 @@ function App() {
   // Usando o contexto para acessar o estado e funções
   const { state, handlePageChange } = useGithubContext();
   const {
-    userData,
     userRepos,
     error,
     isLoading,
@@ -45,7 +44,7 @@ function App() {
       <Container className="App-container">
         {!isLoading && !error && (
           <>
-            {userData && <UserInfo userData={userData} />}
+            <UserInfo />
             <div>
               <Paginator
                 totalResults={userRepos.length}
