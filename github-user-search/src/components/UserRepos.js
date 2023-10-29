@@ -1,12 +1,13 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import SortSelect from "../components/SortSelect";
+import LanguageSelect from "../components/LanguageSelect";
 import { useGithubContext } from "../context/GithubContext";
 
 const UserRepos = () => {
   // Usando o contexto para acessar o estado
   const { state } = useGithubContext();
-  const { userRepos, currentPage, itemsPerPage } = state; 
+  const { userRepos, currentPage, itemsPerPage } = state;
 
   // Calcular o índice do primeiro item na página atual
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -22,6 +23,7 @@ const UserRepos = () => {
       {userRepos.length > 0 && (
         <>
           <SortSelect />
+          <LanguageSelect />
           <h2 className="text-uppercase text-center" style={{ color: "#fff" }}>
             Repositories
           </h2>

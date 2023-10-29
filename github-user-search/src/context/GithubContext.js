@@ -8,11 +8,13 @@ import {
 const initialState = {
   userData: null,
   userRepos: [],
+  originalUserRepos: [],
   error: null,
   isLoading: false,
   currentPage: 1,
   searchPerformed: false,
   itemsPerPage: 10,
+  allLanguages: [],
 };
 
 // Criação do contexto
@@ -25,6 +27,10 @@ const reducer = (state, action) => {
       return { ...state, userData: action.payload };
     case "SET_USER_REPOS":
       return { ...state, userRepos: action.payload };
+    case "SET_ORIGINAL_USER_REPOS":
+      return { ...state, originalUserRepos: action.payload };
+    case "SET_USER_REPOS_ALL_LANGUAGES":
+      return { ...state, allLanguages: action.payload };
     case "SET_ERROR":
       return { ...state, error: action.payload };
     case "SET_IS_LOADING":
@@ -55,11 +61,28 @@ export function GithubProvider({ children }) {
           (a, b) => new Date(b.pushed_at) - new Date(a.pushed_at)
         ),
       });
+      dispatch({
+        type: "SET_ORIGINAL_USER_REPOS",
+        payload: userRepos.sort(
+          (a, b) => new Date(b.pushed_at) - new Date(a.pushed_at)
+        ),
+      });
+      dispatch({
+        type: "SET_USER_REPOS_ALL_LANGUAGES",
+        payload: [
+          ...new Set(
+            userRepos
+              .map((repo) => repo.language)
+              .filter((language) => language !== null)
+          ),
+        ],
+      });
       dispatch({ type: "SET_ERROR", payload: null });
       dispatch({ type: "SET_SEARCH_PERFORMED", payload: true });
     } catch (error) {
       dispatch({ type: "SET_USER_DATA", payload: null });
       dispatch({ type: "SET_USER_REPOS", payload: [] });
+      dispatch({ type: "SET_USER_REPOS_ALL_LANGUAGES", payload: [] });
       dispatch({ type: "SET_ERROR", payload: "User not found." });
       dispatch({ type: "SET_SEARCH_PERFORMED", payload: false });
     } finally {
@@ -88,6 +111,22 @@ export function GithubProvider({ children }) {
     dispatch({ type: "SET_USER_REPOS", payload: sortedRepos });
   };
 
+  // Função para filtrar os repositórios por linguagem
+  const filterByLanguage = (selectedLanguage) => {
+    const { originalUserRepos } = state;
+    let filteredRepos;
+
+    if (selectedLanguage === "All") {
+      filteredRepos = originalUserRepos;
+    } else {
+      filteredRepos = originalUserRepos.filter(
+        (repo) => repo.language === selectedLanguage
+      );
+    }
+
+    dispatch({ type: "SET_USER_REPOS", payload: filteredRepos });
+  };
+
   return (
     <GithubContext.Provider
       value={{
@@ -95,6 +134,7 @@ export function GithubProvider({ children }) {
         onSearch: searchGithubByUserWithContext,
         handlePageChange,
         sortRepos,
+        filterByLanguage,
       }}
     >
       {children}
