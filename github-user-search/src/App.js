@@ -36,7 +36,7 @@ function App() {
           </>
         )}
       </Container>
-      {error && !isLoading && <ErrorMessage message={error} />}
+      {error && !isLoading && <ErrorMessage />}
       {!isLoading && !error && <Paginator />}
       <Footer />
     </div>
