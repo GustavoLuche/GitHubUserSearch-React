@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
+import { useGithubContext } from "../context/GithubContext";
 
-function Search({ onSearch }) {
+function Search() {
+  // Usando o contexto para acessar a função
+  const { onSearch } = useGithubContext();
+
   const [searchQuery, setSearchQuery] = useState("");
 
   // Função para lidar com a pesquisa
@@ -29,7 +33,7 @@ function Search({ onSearch }) {
           <InputGroup.Text
             style={{
               borderTopLeftRadius: "6px",
-              borderBottomLeftRadius: "6px"
+              borderBottomLeftRadius: "6px",
             }}
           >
             @

@@ -72,7 +72,7 @@ export function GithubProvider({ children }) {
     <GithubContext.Provider
       value={{
         state,
-        handleSearch: searchGithubByUserWithContext,
+        onSearch: searchGithubByUserWithContext,
         handlePageChange,
       }}
     >

@@ -15,8 +15,16 @@ import "./App.css";
 
 function App() {
   // Usando o contexto para acessar o estado e funções
-  const { state, handleSearch, handlePageChange } = useGithubContext();
-  const { userData, userRepos, error, isLoading,  currentPage, searchPerformed, itemsPerPage } = state;
+  const { state, handlePageChange } = useGithubContext();
+  const {
+    userData,
+    userRepos,
+    error,
+    isLoading,
+    currentPage,
+    searchPerformed,
+    itemsPerPage,
+  } = state;
 
   // Calcular o índice do primeiro item na página atual
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -31,7 +39,7 @@ function App() {
     <div className="App">
       <Header title="GitHub User Search" />
       <div className={`${searchPerformed ? "" : "no-search-performed"}`}>
-        <Search onSearch={handleSearch} />
+        <Search />
       </div>
       {isLoading && <SpinnerLoading />}
       <Container className="App-container">
