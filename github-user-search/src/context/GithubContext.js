@@ -49,7 +49,12 @@ export function GithubProvider({ children }) {
       const userDetails = await getUserDetails(username);
       dispatch({ type: "SET_USER_DATA", payload: userDetails });
       const userRepos = await getAllUserRepositories(username);
-      dispatch({ type: "SET_USER_REPOS", payload: userRepos });
+      dispatch({
+        type: "SET_USER_REPOS",
+        payload: userRepos.sort(
+          (a, b) => new Date(b.pushed_at) - new Date(a.pushed_at)
+        ),
+      });
       dispatch({ type: "SET_ERROR", payload: null });
       dispatch({ type: "SET_SEARCH_PERFORMED", payload: true });
     } catch (error) {
@@ -68,12 +73,28 @@ export function GithubProvider({ children }) {
     dispatch({ type: "SET_CURRENT_PAGE", payload: pageNumber });
   };
 
+  // Função para classificar os repositórios com base na opção de ordenação
+  const sortRepos = (sortOption) => {
+    const { userRepos } = state;
+
+    // Define a função de comparação com base na opção
+    const compareFunction =
+      sortOption === "lastUpdated"
+        ? (a, b) => new Date(b.pushed_at) - new Date(a.pushed_at)
+        : (a, b) => a.name.localeCompare(b.name);
+
+    // Ordena a lista e atualiza o estado com a lista classificada
+    const sortedRepos = [...userRepos].sort(compareFunction);
+    dispatch({ type: "SET_USER_REPOS", payload: sortedRepos });
+  };
+
   return (
     <GithubContext.Provider
       value={{
         state,
         onSearch: searchGithubByUserWithContext,
         handlePageChange,
+        sortRepos,
       }}
     >
       {children}
@@ -83,12 +104,9 @@ export function GithubProvider({ children }) {
 
 // Hook personalizado para usar o contexto
 export function useGithubContext() {
-    const context = useContext(GithubContext);
-    if (!context) {
-      throw new Error(
-        "useGithubContext must be used within a GithubProvider"
-      );
-    }
-    return context;
+  const context = useContext(GithubContext);
+  if (!context) {
+    throw new Error("useGithubContext must be used within a GithubProvider");
   }
-  
+  return context;
+}

@@ -14,7 +14,7 @@ import { useGithubContext } from "./context/GithubContext";
 import "./App.css";
 
 function App() {
-  // Usando o contexto para acessar o estado e funções
+  // Usando o contexto para acessar o estado
   const { state } = useGithubContext();
   const { error, isLoading, searchPerformed } = state;
 

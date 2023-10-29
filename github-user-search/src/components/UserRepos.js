@@ -1,18 +1,17 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
+import SortSelect from "../components/SortSelect";
 import { useGithubContext } from "../context/GithubContext";
 
 const UserRepos = () => {
   // Usando o contexto para acessar o estado
   const { state } = useGithubContext();
-  const { userRepos, currentPage, itemsPerPage } = state;
-
-  userRepos.sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at));
+  const { userRepos, currentPage, itemsPerPage } = state; 
 
   // Calcular o índice do primeiro item na página atual
   const startIndex = (currentPage - 1) * itemsPerPage;
 
-  // Filtrar a lista de conselhos para exibir apenas os itens da página atual
+  // Filtrar a lista de repositories para exibir apenas os itens da página atual
   const userReposToDisplay = userRepos.slice(
     startIndex,
     startIndex + itemsPerPage
@@ -22,6 +21,7 @@ const UserRepos = () => {
     <div className="App-user-repos mb-3">
       {userRepos.length > 0 && (
         <>
+          <SortSelect />
           <h2 className="text-uppercase text-center" style={{ color: "#fff" }}>
             Repositories
           </h2>
