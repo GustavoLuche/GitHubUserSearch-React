@@ -15,7 +15,7 @@ import "./App.css";
 
 function App() {
   // Usando o contexto para acessar o estado e funções
-  const { state, handlePageChange } = useGithubContext();
+  const { state } = useGithubContext();
   const {
     userRepos,
     error,
@@ -46,12 +46,7 @@ function App() {
           <>
             <UserInfo />
             <div>
-              <Paginator
-                totalResults={userRepos.length}
-                currentPage={currentPage}
-                itemsPerPage={itemsPerPage}
-                onPageChange={handlePageChange}
-              />
+              <Paginator />
               {userRepos.length > 0 && (
                 <UserRepos userRepos={userReposToDisplay} />
               )}
@@ -60,14 +55,7 @@ function App() {
         )}
       </Container>
       {error && !isLoading && <ErrorMessage message={error} />}
-      {!isLoading && !error && (
-        <Paginator
-          totalResults={userRepos.length}
-          currentPage={currentPage}
-          itemsPerPage={itemsPerPage}
-          onPageChange={handlePageChange}
-        />
-      )}
+      {!isLoading && !error && <Paginator />}
       <Footer />
     </div>
   );

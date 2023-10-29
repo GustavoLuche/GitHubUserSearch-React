@@ -1,8 +1,13 @@
 import React from "react";
 import Pagination from "react-bootstrap/Pagination";
+import { useGithubContext } from "../context/GithubContext";
 
-function Paginator({ totalResults, currentPage, itemsPerPage, onPageChange }) {
-  const totalPages = Math.ceil(totalResults / itemsPerPage);
+function Paginator() {
+  // Usando o contexto para acessar o estado e funções
+  const { state, handlePageChange } = useGithubContext();
+  const { userRepos, currentPage, itemsPerPage } = state;
+
+  const totalPages = Math.ceil(userRepos.length / itemsPerPage);
 
   // Define o número máximo de itens de paginação a serem exibidos
   const maxItens = 10;
@@ -39,20 +44,33 @@ function Paginator({ totalResults, currentPage, itemsPerPage, onPageChange }) {
   return (
     <div className="App-paginator d-flex justify-content-center mb-3">
       <Pagination className="m-0">
-        {startItem > 1 && <Pagination.First className="custom-page" onClick={() => onPageChange(1)} />}
-        {startItem > 2 && <Pagination.Ellipsis className="custom-page" disabled />}
+        {startItem > 1 && (
+          <Pagination.First
+            className="custom-page"
+            onClick={() => handlePageChange(1)}
+          />
+        )}
+        {startItem > 2 && (
+          <Pagination.Ellipsis className="custom-page" disabled />
+        )}
         {pages.map((page) => (
-          <Pagination.Item className="custom-page"
+          <Pagination.Item
+            className="custom-page"
             key={page}
             active={currentPage === page}
-            onClick={() => onPageChange(page)} 
+            onClick={() => handlePageChange(page)}
           >
             {page}
           </Pagination.Item>
         ))}
-        {endItem < totalPages - 1 && <Pagination.Ellipsis className="custom-page" disabled />}
+        {endItem < totalPages - 1 && (
+          <Pagination.Ellipsis className="custom-page" disabled />
+        )}
         {endItem < totalPages && (
-          <Pagination.Last className="custom-page" onClick={() => onPageChange(totalPages)} />
+          <Pagination.Last
+            className="custom-page"
+            onClick={() => handlePageChange(totalPages)}
+          />
         )}
       </Pagination>
     </div>
