@@ -9,6 +9,7 @@ const initialState = {
   userData: null,
   userRepos: [],
   originalUserRepos: [],
+  filteredRepos: [],
   error: null,
   isLoading: false,
   currentPage: 1,
@@ -29,6 +30,8 @@ const reducer = (state, action) => {
       return { ...state, userRepos: action.payload };
     case "SET_ORIGINAL_USER_REPOS":
       return { ...state, originalUserRepos: action.payload };
+    case "SET_FILTERED_REPOS":
+      return { ...state, filteredRepos: action.payload };
     case "SET_USER_REPOS_ALL_LANGUAGES":
       return { ...state, allLanguages: action.payload };
     case "SET_ERROR":
@@ -114,17 +117,38 @@ export function GithubProvider({ children }) {
   // Função para filtrar os repositórios por linguagem
   const filterByLanguage = (selectedLanguage) => {
     const { originalUserRepos } = state;
-    let filteredRepos;
-
     if (selectedLanguage === "All") {
-      filteredRepos = originalUserRepos;
+      dispatch({ type: "SET_USER_REPOS", payload: originalUserRepos });
     } else {
-      filteredRepos = originalUserRepos.filter(
+      const filteredReposByLanguage = originalUserRepos.filter(
         (repo) => repo.language === selectedLanguage
       );
+      dispatch({
+        type: "SET_FILTERED_REPOS",
+        payload: filteredReposByLanguage,
+      });
+      dispatch({ type: "SET_USER_REPOS", payload: filteredReposByLanguage });
     }
+  };
 
-    dispatch({ type: "SET_USER_REPOS", payload: filteredRepos });
+  // Furnção para filtar os repositórios por term
+  const filterByTerm = (term) => {
+    const { originalUserRepos, filteredRepos } = state;
+
+    if (term.trim() !== "") {
+      dispatch({
+        type: "SET_FILTERED_REPOS",
+        payload: originalUserRepos.filter(
+          (repo) =>
+            repo.name.toLowerCase().includes(term) ||
+            (repo.description && repo.description.toLowerCase().includes(term))
+        ),
+      });
+      dispatch({ type: "SET_USER_REPOS", payload: filteredRepos });
+      dispatch({ type: "SET_ERROR", payload: null });
+    } else {
+      dispatch({ type: "SET_USER_REPOS", payload: originalUserRepos });
+    }
   };
 
   return (
@@ -135,6 +159,7 @@ export function GithubProvider({ children }) {
         handlePageChange,
         sortRepos,
         filterByLanguage,
+        filterByTerm,
       }}
     >
       {children}

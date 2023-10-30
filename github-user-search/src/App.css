@@ -44,7 +44,6 @@
   color: #000; 
 }
 
-
 /* Estilo para o rodapé */
 .App-footer {
   margin-top: auto;
@@ -66,13 +65,55 @@
   margin-top: 100px; 
 }
 
+@media (max-width: 996px) {
+  .App-container {
+    grid-template-columns: 1fr; 
+  }
+
+  .FilterAndSearchBar {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .RepositorySearch {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .Select {
+    display: flex;
+    align-items: center;
+  }
+
+  .App-user-info {
+    text-align: center;
+  }
+
+}
+
 /* Estilo para telas menores ou dispositivos móveis */
 @media (max-width: 768px) {
   .App-container {
     grid-template-columns: 1fr; 
   }
 
+  .FilterAndSearchBar {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .RepositorySearch {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .Select {
+    display: flex;
+    align-items: center;
+  }
+
   .App-user-info {
     text-align: center;
   }
+
 }

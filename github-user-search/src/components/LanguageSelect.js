@@ -14,13 +14,13 @@ const LanguageSelect = () => {
   };
 
   return (
-    <Form>
+    <Form className="LanguageSelect">
       <Form.Select
-        value=""
+        value="Languages"
         onChange={handleLanguageChange}
         aria-label="Default select example"
       >
-        <option value="">Languages</option>
+        <option>Languages</option>
         <option value="All">All Languages</option>
         {allLanguages.map((language) => (
           <option key={language} value={language}>

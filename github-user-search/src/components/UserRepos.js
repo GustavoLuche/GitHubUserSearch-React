@@ -2,12 +2,13 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import SortSelect from "../components/SortSelect";
 import LanguageSelect from "../components/LanguageSelect";
+import RepositorySearch from "../components/RepositorySearch";
 import { useGithubContext } from "../context/GithubContext";
 
 const UserRepos = () => {
   // Usando o contexto para acessar o estado
   const { state } = useGithubContext();
-  const { userRepos, currentPage, itemsPerPage } = state;
+  const { userData, userRepos, currentPage, itemsPerPage } = state;
 
   // Calcular o índice do primeiro item na página atual
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -20,10 +21,21 @@ const UserRepos = () => {
 
   return (
     <div className="App-user-repos mb-3">
-      {userRepos.length > 0 && (
+      {userData && (
         <>
-          <SortSelect />
-          <LanguageSelect />
+          <div className="FilterAndSearchBar mb-3 d-flex align-items-center">
+            <div className="RepositorySearch flex-fill">
+              <RepositorySearch />
+            </div>
+            <div className="Select d-flex align-items-center">
+              <div className="SortSelect p-2">
+                <SortSelect />
+              </div>
+              <div className="LanguageSelect">
+                <LanguageSelect />
+              </div>
+            </div>
+          </div>
           <h2 className="text-uppercase text-center" style={{ color: "#fff" }}>
             Repositories
           </h2>
