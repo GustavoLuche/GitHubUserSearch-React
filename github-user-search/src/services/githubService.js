@@ -2,7 +2,13 @@ import axios from "axios";
 
 const BASE_URL = "https://api.github.com";
 
-// Função para buscar detalhes de um usuário do GitHub
+/**
+ * Função para buscar detalhes de um usuário do GitHub.
+ *
+ * @param {string} username - O nome de usuário do GitHub.
+ * @returns {Promise<Object>} - Um objeto contendo os detalhes do usuário.
+ * @throws {Error} - Lança um erro se o usuário não for encontrado ou se houver um problema com a solicitação.
+ */
 export const getUserDetails = async (username) => {
   try {
     const response = await axios.get(`${BASE_URL}/users/${username}`);
@@ -16,7 +22,13 @@ export const getUserDetails = async (username) => {
   }
 };
 
-// Função para buscar todos os repositórios de um usuário no GitHub
+/**
+ * Função para buscar todos os repositórios de um usuário no GitHub.
+ *
+ * @param {string} username - O nome de usuário do GitHub.
+ * @returns {Promise<Array>} - Um array contendo todos os repositórios do usuário.
+ * @throws {Error} - Lança um erro se não for possível recuperar os repositórios do usuário.
+ */
 export const getAllUserRepositories = async (username) => {
   try {
     let page = 1;
@@ -31,7 +43,7 @@ export const getAllUserRepositories = async (username) => {
         allRepositories = allRepositories.concat(response.data);
         page++;
       } else {
-        // Nenhos mais repositórios disponíveis
+        // Não há mais repositórios disponíveis
         break;
       }
     }
