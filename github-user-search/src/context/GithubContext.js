@@ -129,6 +129,7 @@ export function GithubProvider({ children }) {
       });
       dispatch({ type: "SET_USER_REPOS", payload: filteredReposByLanguage });
     }
+    dispatch({ type: "SET_CURRENT_PAGE", payload: 1 });
   };
 
   // Furnção para filtar os repositórios por term
@@ -149,6 +150,7 @@ export function GithubProvider({ children }) {
     } else {
       dispatch({ type: "SET_USER_REPOS", payload: originalUserRepos });
     }
+    dispatch({ type: "SET_CURRENT_PAGE", payload: 1 });
   };
 
   return (
